@@ -1,0 +1,10 @@
+﻿Flask==2.3.3
+Flask-SQLAlchemy==3.0.3
+bcrypt==4.0.1
+qrcode==7.4.2
+reportlab==3.6.13
+SQLAlchemy==2.0.19
+pyodbc==5.1.0
+Flask-Migrate==4.0.0
+Werkzeug==2.3.7
+Flask-Login==0.6.2

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Payment Page</title>
+    <!-- Link to Payment CSS -->
+    <link rel="stylesheet" href="/static/css/payment.css">
+    <style>
+        /* Basic styling for the card element container */
+        #card-element {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            z-index: 10; /* Ensure it's on top and clickable */
+            background-color: white;
+            transition: all 0.3s ease; /* Smooth transition */
+            cursor: pointer; /* Change cursor to pointer */
+        }
+
+        /* Stripe errors styling */
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .payment-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            position: relative; /* Ensure container is positioned correctly */
+            z-index: 1; /* Set a base z-index for the container */
+        }
+
+        .payment-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .payment-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .payment-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .payment-form button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Ensure that nothing else is interfering with the card element */
+        #payment-form {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Ensure that other elements on the page do not overlap */
+        body {
+            background-color: #f4f4f4;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-container">
+        <h2>Complete Your Payment</h2>
+        
+        <!-- Display the selected plan dynamically -->
+        <p id="selected-plan">Plan</p> <!-- This will be updated dynamically -->
+
+        <!-- Payment form starts here -->
+        <form id="payment-form" class="payment-form">
+            <label for="card-holder-name">Cardholder Name</label>
+            <input type="text" id="card-holder-name" placeholder="Enter the name on your card" required>
+            
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <!-- Card details section (Stripe integration) -->
+            <label for="card-element">Card Details</label>
+            <div id="card-element"><!-- A Stripe Element will be inserted here --></div>
+
+            <!-- Error message display -->
+            <div id="error-message" role="alert"></div>
+
+            <!-- Submit button -->
+            <button id="submit" type="submit">Pay</button>
+        </form>
+
+        <!-- Payment result display -->
+        <div id="payment-result"></div>
+    </div>
+
+    <!-- Include your payment processing library (like Stripe.js) -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // Parse the query parameters to get the selected plan
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('plan');  // Get the 'plan' parameter from the URL
+        }
+
+        // Update the page to show the selected plan
+        function displaySelectedPlan() {
+            const selectedPlan = getQueryParams();
+            const planElement = document.getElementById('selected-plan');
+
+            // Set the plan name and amount based on the selected plan
+            if (selectedPlan === 'basic') {
+                planElement.textContent = 'Basic Plan - $10/month';
+            } else if (selectedPlan === 'pro') {
+                planElement.textContent = 'Pro Plan - $25/month';
+            } else if (selectedPlan === 'enterprise') {
+                planElement.textContent = 'Enterprise Plan - $50/month';
+            } else {
+                planElement.textContent = 'No plan selected';
+            }
+        }
+
+        // Call the function to update the plan when the page loads
+        document.addEventListener('DOMContentLoaded', displaySelectedPlan);
+
+        // Initialize Stripe with your publishable key
+        const stripe = Stripe('{{ publishable_key }}');  // Replace with your actual Stripe publishable key
+
+        const elements = stripe.elements();
+        const card = elements.create('card', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    color: '#32325d',
+                    '::placeholder': {
+                        color: '#aab7c4',
+                    },
+                },
+                invalid: {
+                    color: '#fa755a',
+                },
+            },
+        });
+        card.mount('#card-element');
+
+        // Make the card element focusable on click
+        document.getElementById('card-element').addEventListener('click', () => {
+            card.focus();  // Focus the card input when clicked
+        });
+
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // Fetch the client secret for the payment from your backend
+            const { clientSecret } = await fetch("/create-payment-intent", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: document.getElementById('email').value,
+                    plan: document.getElementById('selected-plan').textContent.split(' ')[0].toLowerCase()  // Pass the plan name
+                })
+            }).then(r => r.json());
+
+            // Confirm the card payment using Stripe
+            const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        name: document.getElementById('card-holder-name').value,
+                        email: document.getElementById('email').value
+                    }
+                }
+            });
+
+            // Handle errors and display success or failure messages
+            if (error) {
+                document.getElementById('error-message').textContent = error.message;
+            } else if (paymentIntent.status === 'succeeded') {
+                document.getElementById('payment-result').textContent = 'Payment successful!';
+            }
+        });
+    </script>
+</body>
+</html>

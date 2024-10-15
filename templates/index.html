@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Dashboard 360</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/index .css">
+
+    <style>
+       
+        /* Hero Section with Overlay */
+        .hero {
+            background-image: url('static/imgs/banner.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="static/imgs/logo.png" height="60" alt="logo">
+                </a>
+                <div class="ml-auto">
+                    <a href="#iot-features" class="nav-link">IoT Features</a>
+                    <a href="#iot-dashboards" class="nav-link">IoT Dashboards</a>
+                    <a href="#partners" class="nav-link">Partners</a>
+                    <a href="#pricing" class="nav-link">Pricing</a> <!-- Updated order of links -->
+                    <a href="/login" class="btn btn-dark login-button">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Overlay -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Dashboard 360</h1>
+            <p>Your ultimate IoT Dashboard solution</p>
+            <a href="#features" class="btn btn-light">Explore Features</a>
+        </div>
+    </div>
+
+    <!-- Key Features Section -->
+    <section class="feature bg-light" id="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="static/imgs/api-icon.png" alt="Flexible APIs Icon">
+                    <h3>Flexible APIs</h3>
+                    <p>Adaptable to your specific needs with our flexible API integrations. Whether you are building an IoT solution or connecting various devices, our APIs are here to serve.</p>
+                </div>
+                <div class="col-md-4">
+                    <img src="static/imgs/qrcode-icon.png" alt="QR Code Generation Icon">
+                    <h3>QR Code Generation</h3>
+                    <p>Generate QR codes effortlessly for your IoT devices, making management easier and ensuring seamless integration with other systems.</p>
+                </div>
+                <div class="col-md-4">
+                    <img src="static/imgs/pdf-icon.png" alt="PDF Generation Icon">
+                    <h3>PDF Generation</h3>
+                    <p>Generate comprehensive PDFs for your reports and data summaries. You can export device information, logs, and analytics for sharing and record-keeping.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- IoT Dashboards Section -->
+<section id="iot-dashboards" class="iot-dashboards">
+    <div class="container">
+        <h2 class="text-center">Dashboards Designed for Various IoT Applications</h2>
+    </div>
+
+    <div class="list-group-wrapper">
+        <div class="row justify-content-center align-items-start">
+            <div class="col-md-4 col-12">
+                <div class="list-group" id="list-tab" role="presentation">
+                    <a class="list-group-item list-group-item-action" id="list-smart-metering" data-bs-toggle="tab" role="tab" onclick="showInfo('smartMeteringInfo')">
+                        <div class="d-flex align-items-center">
+                            <i class="flaticon-wifi-router"></i>
+                            <span>Smart Metering</span>
+                        </div>
+                    </a>
+                    <div id="smartMeteringInfo" class="info-box" style="display: none;">
+                        <p>Smart metering allows for real-time monitoring and management of energy consumption, improving efficiency and reducing costs.</p>
+                    </div>
+
+                    <a class="list-group-item list-group-item-action" id="list-smart-energy" data-bs-toggle="tab" role="tab" onclick="showInfo('smartEnergyInfo')">
+                        <div class="d-flex align-items-center">
+                            <i class="flaticon-parking"></i>
+                            <span>Smart Energy Metering</span>
+                        </div>
+                    </a>
+                    <div id="smartEnergyInfo" class="info-box" style="display: none;">
+                        <p>Smart energy metering systems offer accurate data collection, enhancing energy management and promoting sustainability.</p>
+                    </div>
+
+                    <a class="list-group-item list-group-item-action" id="list-fleet-management" data-bs-toggle="tab" role="tab" onclick="showInfo('fleetManagementInfo')">
+                        <div class="d-flex align-items-center">
+                            <i class="flaticon-windscreen"></i>
+                            <span>Fleet Management</span>
+                        </div>
+                    </a>
+                    <div id="fleetManagementInfo" class="info-box" style="display: none;">
+                        <p>Fleet management solutions enhance vehicle tracking, improving operational efficiency and reducing costs through optimized routing and maintenance.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-12 text-center">
+                <div id="dashboard-image" class="mt-3">
+                    <img src="/static/imgs/iot-dash3.png" class="img-fluid rounded" alt="Smart Metering IoT Dashboard" id="current-dashboard" style="width: 100%; height: auto; max-height: 400px;" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function showInfo(infoType) {
+        const infoBoxes = document.querySelectorAll('.info-box');
+        
+        // Toggle visibility of the selected info box
+        infoBoxes.forEach(box => {
+            if (box.id === infoType) {
+                box.style.display = box.style.display === 'block' ? 'none' : 'block';
+            } else {
+                box.style.display = 'none'; // Close others
+            }
+        });
+
+        // Update active class
+        const listItems = document.querySelectorAll('.list-group-item');
+        listItems.forEach(item => {
+            item.classList.remove('active');
+        });
+        document.getElementById('list-' + infoType).classList.add('active');
+    }
+</script>
+
+<style>
+    .iot-dashboards {
+        background-color: #f9f9f9; /* Light background for contrast */
+        padding: 40px 0; /* Padding around the section */
+    }
+
+    h2 {
+        margin-bottom: 20px; /* Space below title */
+        font-size: 2rem; /* Font size */
+        color: #333; /* Dark color for readability */
+    }
+
+    .list-group-item {
+        transition: background-color 0.3s, color 0.3s;
+        border-radius: 5px; /* Rounded corners */
+        padding: 15px; /* Padding for better click area */
+    }
+
+    .list-group-item.active {
+        background-color: #007bff; /* Active state color */
+        color: white; /* Change text color for better contrast */
+    }
+
+    .list-group-item:hover {
+        background-color: #0056b3; /* Hover color */
+        color: white; /* Text color on hover */
+    }
+
+    .info-box {
+        margin-top: 10px; /* Space above info box */
+        padding: 10px; /* Padding for info box */
+        background-color: #e9ecef; /* Light background for info box */
+        border-radius: 5px; /* Rounded corners for info box */
+    }
+</style>
+
+
+
+<section id="iot-features" class="container mt-5">
+   <b ><h2 class="text-center" style="font-family: 'Poppins', sans-serif; margin-bottom: 20px; font-size: 2rem; color: #333;">IOT FEATURES</h2></b>
+
+    
+    <ul class="nav nav-tabs justify-content-center mb-4" id="iotFeaturesTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="hardware-integration-tab" data-bs-toggle="tab" href="#hardware-integration" role="tab" aria-controls="hardware-integration" aria-selected="true">Hardware Integration</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="device-management-tab" data-bs-toggle="tab" href="#device-management" role="tab" aria-controls="device-management" aria-selected="false">Device Management</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="data-collection-tab" data-bs-toggle="tab" href="#data-collection" role="tab" aria-controls="data-collection" aria-selected="false">Data Collection</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="iotFeaturesTabContent">
+
+        <!-- Hardware Integration Tab -->
+        <div class="tab-pane fade show active" id="hardware-integration" role="tabpanel" aria-labelledby="hardware-integration-tab">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-12 text-center">
+                    <img src="/static/imgs/hardware.jpg" class="img-fluid" alt="Hardware Integration">
+                </div>
+                <div class="col-lg-6 col-12">
+                    <h3>Seamless Integration</h3>
+                    <p>Effortlessly integrate various hardware components into your IoT ecosystem for enhanced functionality and performance.</p>
+                    <ul>
+                        <li>Support for various protocols (e.g., MQTT, CoAP).</li>
+                        <li>Easy integration with existing infrastructure.</li>
+                        <li>Customizable hardware solutions.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Device Management Tab -->
+        <div class="tab-pane fade show active" id="device-management" role="tabpanel" aria-labelledby="device-management-tab">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-12 text-center">
+                    <img src="/static/imgs/device.png" class="img-fluid" alt="Device Management">
+                </div>
+                <div class="col-lg-6 col-12">
+                    <h3>Comprehensive Management</h3>
+                    <p>Manage all your connected devices from a single dashboard, ensuring optimal performance and easy monitoring.</p>
+                    <ul>
+                        <li>Real-time device status tracking.</li>
+                        <li>Easy firmware updates and configuration.</li>
+                        <li>User-friendly management interface.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Collection Tab -->
+        <div class="tab-pane fade show active" id="data-collection" role="tabpanel" aria-labelledby="data-collection-tab">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-12 text-center">
+                    <img src="/static/imgs/datacol.jpg" class="img-fluid" alt="Data Collection">
+                </div>
+                <div class="col-lg-6 col-12">
+                    <h3>Real-Time Insights</h3>
+                    <p>Collect and analyze data from connected devices in real-time, enabling informed decision-making and actionable insights.</p>
+                    <ul>
+                        <li>Data visualization tools for better analysis.</li>
+                        <li>Integration with cloud storage for data retention.</li>
+                        <li>Alerts and notifications for critical events.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Bootstrap JS and dependencies (if not already included) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+
+<style>
+
+    /* General Styling for IoT Features Section */
+#iot-features {
+    background-color: #f9f9f9; /* Light background for consistency */
+    padding: 40px 0; /* Similar padding to other sections */
+}
+
+
+#iotFeaturesTab .nav-link {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    padding: 15px;
+    color: #007bff;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#iotFeaturesTab .nav-link.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+#iotFeaturesTab .nav-link:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.tab-content .tab-pane {
+    margin-top: 20px;
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Responsive image styling */
+.tab-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+    /* Style for active tab */
+    .nav-tabs .nav-link.active {
+        background-color: white; /* Change this to your desired active tab color */
+        color:white; /* Change text color for the active tab #007bff */
+        border-color:white; /* Match border color with active tab background */
+    }
+
+    /* Prevent scrolling on tab change */
+    .tab-content {
+        overflow-y: hidden; /* Disable vertical scrolling */
+        padding: 20px; /* Padding for the content */
+    }
+
+    /* Adjust content container */
+    .tab-pane {
+        display: none; /* Always hide the content initially */
+        transition: opacity 0.5s ease; /* Smooth transition */
+    }
+
+    .fade {
+        opacity: 0; /* Hide the content */
+    }
+
+    .show {
+        display: block; /* Show the content when active */
+        opacity: 1; /* Set opacity to visible */
+    }
+</style>
+
+<script>
+    // Bootstrap's tab events to handle the display of content
+    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+        // Ensure the current tab's content is visible and other tabs are hidden
+        $('.tab-pane').removeClass('show active');
+        $($(e.target).attr("href")).addClass('show active');
+    });
+</script>
+
+
+
+
+
+<!-- Partners Section -->
+<section class="partners bg-light" id="partners">
+    <div class="container text-center">
+        <h2>Our Partners</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <a href="https://tektelic.com/" target="_blank">
+                    <img src="static/imgs/partner1.png" alt="Partner 1" class="img-fluid">
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://www.browan.com/" target="_blank">
+                    <img src="static/imgs/partner2.png" alt="Partner 2" class="img-fluid">
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://sia-connect.com/company/" target="_blank">
+                    <img src="static/imgs/partner3.png" alt="Partner 3" class="img-fluid">
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://www.dragino.com/about/about.html" target="_blank">
+                    <img src="static/imgs/partner4.png" alt="Partner 4" class="img-fluid">
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Pricing Section -->
+<section class="pricing" id="pricing">
+    <div class="container">
+        <h2>Pricing Plans</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Basic Plan</h3>
+                        <p class="card-text">$10/month</p>
+                        <p>Access to basic features</p>
+                        <a href="/payment?plan=basic" class="btn btn-primary">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Pro Plan</h3>
+                        <p class="card-text">$25/month</p>
+                        <p>Includes all basic features and advanced integrations</p>
+                        <a href="/payment?plan=pro" class="btn btn-primary">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Enterprise Plan</h3>
+                        <p class="card-text">$50/month</p>
+                        <p>Full access to all features and premium support</p>
+                        <a href="/payment?plan=enterprise" class="btn btn-primary">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" title="Go to top">↑ Top</button>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2024 Dashboard 360. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS for Back to Top Button -->
+    <script>
+        // Show/hide the back-to-top button
+        window.onscroll = function () {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            var btn = document.getElementById("backToTopBtn");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        }
+
+        // Scroll to the top of the page
+        document.getElementById("backToTopBtn").onclick = function () {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        };
+    </script>
+
+</body>
+</html>

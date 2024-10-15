@@ -1,0 +1,1240 @@
+/* Main CSS Here */
+
+@import url( 
+"https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"); 
+
+* { 
+margin: 0; 
+padding: 0; 
+box-sizing: border-box; 
+font-family: "Poppins", sans-serif; 
+} 
+:root { 
+	--background-color1: #f5f7fa;   /* Slightly darker off-white */
+	--background-color2: #ffffff;   /* White */
+	--background-color3: #e2e6ea;   /* Light grey */
+	--background-color4: #c3dafd;   /* Soft light blue */
+	--primary-color: #d1d7e0;       /* Light blue-grey */
+	--secondary-color: #071059;     /* Darker blue for better contrast */
+	--Border-color: #c4c4c4;        /* Mid-tone grey */
+	--one-use-color: #0f1c66;       /* Medium dark blue */
+	--two-use-color: #0f1c66;       /* Slightly different blue for variation */
+  } 
+
+body { 
+background-color: var(--background-color4); 
+max-width: 100%; 
+overflow-x: hidden; 
+} 
+
+header { 
+height: 70px; 
+width: 100vw; 
+padding: 0 30px; 
+background-color: var(--background-color1); 
+position: fixed; 
+z-index: 100; 
+box-shadow: 1px 1px 15px rgba(161, 182, 253, 0.825); 
+display: flex; 
+justify-content: space-between; 
+align-items: center; 
+} 
+
+.logo { 
+padding: 10px 10px;
+float: center;
+font-size: 27px; 
+font-weight: 600; 
+color: rgb(6, 21, 10); 
+} 
+
+.icn { 
+height: 50px; 
+} 
+
+.menuicn { 
+cursor: pointer; 
+} 
+
+.searchbar{ 
+	padding: 10px 10px ;
+	display: flex; 
+	align-items: right; 
+	justify-content: right; 
+	}  
+
+
+header.logosec { 
+display: flex; 
+align-items: right; 
+justify-content: right; 
+} 
+
+.searchbar2 { 
+display: none; 
+} 
+
+.logosec { 
+gap: 60px; 
+} 
+
+.searchbar input { 
+width: 250px; 
+height: 42px; 
+border-radius: 50px 0 0 50px; 
+background-color: var(--background-color3); 
+padding: 0 20px; 
+font-size: 15px; 
+outline: none; 
+border: none; 
+} 
+.searchbtn { 
+width: 60px; 
+height: 42px; 
+display: flex; 
+align-items: center; 
+justify-content: center; 
+border-radius: 0px 50px 50px 0px; 
+background-color: var(--secondary-color); 
+cursor: pointer; 
+} 
+
+.message { 
+padding: 10px 3px;
+float: center;
+gap: 10px; 
+position: relative; 
+cursor: pointer; 
+} 
+.circle { 
+height: 7px; 
+width: 7px; 
+position: absolute; 
+background-color: #fa7bb4; 
+border-radius: 50%; 
+left: 19px; 
+top: 8px; 
+} 
+.dp { 
+height: 40px; 
+width: 40px; 
+background-color: #626262; 
+border-radius: 50%; 
+display: flex; 
+align-items: center; 
+justify-content: center; 
+overflow: hidden; 
+} 
+.main-container { 
+display: flex; 
+margin-left: 10px;
+width: 100vw; 
+position: relative; 
+top: 70px; 
+z-index: 1; 
+} 
+.dpicn { 
+height: 42px; 
+} 
+
+.main { 
+  margin-right: 40px;
+margin-top: 0;
+padding: 0;
+height: calc(100vh - 70px); 
+width: 100%; 
+overflow-y: scroll; 
+overflow-x: hidden; 
+padding: 40px 30px 30px 30px; 
+} 
+
+.main1-container { 
+  display: flex; 
+  margin-left: 10px;
+  width: 100vw; 
+  position: relative; 
+  top: 70px; 
+  z-index: 1; 
+  } 
+.main1 { 
+margin-top: 0;
+padding: 0;
+height: calc(100vh - 70px); 
+width: 100%; 
+overflow-y: scroll; 
+overflow-x: hidden; 
+padding: 40px 30px 30px 30px; 
+}
+
+
+.main2-container { 
+  display: flex; 
+ 
+  
+  width: 100vw; 
+  position: relative; 
+  top: 70px; 
+  z-index: 1; 
+  } 
+.main2 { 
+
+margin-top: 0;
+padding: 0;
+height: calc(100vh - 70px); 
+width: 100%; 
+overflow-y: scroll; 
+overflow-x: scroll; 
+padding: 40px 30px 30px 30px; 
+}
+
+
+
+
+
+.main1::-webkit-scrollbar-thumb { 
+  background-image: 
+      linear-gradient(to bottom, rgb(0, 0, 85), rgb(0, 0, 50)); 
+  } 
+  .main1::-webkit-scrollbar { 
+  width: 15px; 
+  } 
+  .main1::-webkit-scrollbar-track { 
+  background-color: #9e9e9eb2; 
+  }
+
+
+.main::-webkit-scrollbar-thumb { 
+background-image: 
+		linear-gradient(to bottom, rgb(0, 0, 85), rgb(0, 0, 50)); 
+} 
+.main::-webkit-scrollbar { 
+width: 15px; 
+} 
+.main::-webkit-scrollbar-track { 
+background-color: #9e9e9eb2; 
+} 
+
+.box-container { 
+margin-right: 40px;
+display: flex; 
+justify-content: space-evenly; 
+align-items: center; 
+flex-wrap: nowrap;
+
+gap: 65px; /* Remove gaps between the cards */
+    padding: 10px; /* Remove padding if any */
+    margin: 0; /* Remove margin if any */
+} 
+
+.box-container1 { 
+  margin-right: 40px;
+  display: flex; 
+  justify-content: space-evenly; 
+  align-items: center; 
+  flex-wrap: nowrap;
+  
+  gap: 62px; /* Remove gaps between the cards */
+      padding: 10px; /* Remove padding if any */
+      margin: 0; /* Remove margin if any */
+  } 
+
+
+
+  .box-container2 { 
+    margin-top: 40px;
+    margin-right: 40px;
+    display: flex; 
+    justify-content: space-evenly; 
+    align-items: center; 
+    flex-wrap: nowrap;
+    
+    gap: 17px; /* Remove gaps between the cards */
+        padding: 10px; /* Remove padding if any */
+        margin: 0; /* Remove margin if any */
+    } 
+
+.nav { 
+min-height: 91vh; 
+width: 250px; 
+background-color: var(--background-color2); 
+position: absolute; 
+top: 0px; 
+left: 00; 
+box-shadow: 1px 1px 10px rgba(198, 189, 248, 0.825); 
+display: flex; 
+flex-direction: column; 
+justify-content: space-between; 
+overflow: hidden; 
+padding: 40px 0 40px 10px; 
+} 
+.navcontainer {
+  
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  width: 250px; /* Adjust the width as needed */
+  background-color: #f8f9fa; /* Light background for the sidebar */
+  padding: 10px;
+
+height: calc(100vh - 70px); 
+width: 250px; 
+position: relative; 
+overflow-y: scroll; 
+overflow-x: hidden; 
+transition: all 0.5s ease-in-out; 
+} 
+.navcontainer::-webkit-scrollbar { 
+display: none; 
+} 
+.navclose { 
+width: 80px; 
+} 
+.nav-option { 
+  position: relative; /* Ensure submenu is positioned correctly */
+ 
+ 
+  text-decoration: none;
+  text-decoration-line: none;
+width: 250px; 
+height: 60px; 
+display: flex; 
+align-items: center; 
+padding: 0 30px 0 20px; 
+gap: 10px; 
+transition: all 0.1s ease-in-out; 
+
+
+} 
+
+.settings-link {
+  display: flex;
+  align-items: center; /* Aligns items vertically center */
+  text-decoration: none; /* Removes underline from link */
+}
+
+.settings-link img {
+  margin-right: 15px; /* Adds space between icon and text */
+  width: 30px; /* Adjust the size of the icon */
+  height: auto; /* Keeps aspect ratio */
+}
+
+.settings-link h4 {
+  margin: 0; /* Removes default margin */
+  font-size: 24px; /* Adjusts font size */
+  text-decoration: none;
+}
+
+
+.button2{
+margin-top: 30px;
+	display: inline-block;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    
+}
+.button2:hover{
+
+	cursor: pointer; }
+
+.nav-option:hover { 
+border-left: 5px solid #a2a2a2; 
+background-color: #dadada; 
+cursor: pointer; 
+} 
+.nav-img { 
+height: 30px; 
+} 
+
+.nav-upper-options { 
+display: flex; 
+flex-direction: column; 
+align-items: center; 
+gap: 30px; 
+} 
+
+.option1 { 
+border-left: 5px solid #010058af; 
+background-color: var(--Border-color); 
+color: white; 
+cursor: pointer; 
+} 
+.option1:hover { 
+border-left: 5px solid #010058af; 
+background-color: var(--Border-color); 
+} 
+.box { 
+height: 130px; 
+width: 230px; 
+border-radius: 20px; 
+box-shadow: 3px 3px 10px rgba(0, 30, 87, 0.751); 
+padding: 20px; 
+display: flex; 
+align-items: center; 
+justify-content: space-around; 
+cursor: pointer; 
+transition: transform 0.3s ease-in-out; 
+} 
+.box:hover { 
+transform: scale(1.08); 
+} 
+
+.box:nth-child(1) { 
+background-color: var(--one-use-color); 
+} 
+.box:nth-child(2) { 
+background-color: var(--two-use-color); 
+} 
+.box:nth-child(3) { 
+background-color: var(--one-use-color); 
+} 
+.box:nth-child(4) { 
+background-color: var(--two-use-color); 
+} 
+
+.box img { 
+height: 50px; 
+} 
+.box .text { 
+color: white; 
+} 
+.topic { 
+font-size: 13px; 
+font-weight: 400; 
+letter-spacing: 1px; 
+} 
+
+.topic-heading { 
+font-size: 30px; 
+letter-spacing: 3px; 
+} 
+
+.report-container { 
+min-height: 300px; 
+max-width: 1200px; 
+margin: 70px auto 0px auto; 
+background-color: #ffffff; 
+border-radius: 30px; 
+box-shadow: 3px 3px 10px rgb(188, 188, 188); 
+padding: 0px 20px 20px 20px; 
+} 
+.report-header { 
+height: 80px; 
+width: 100%; 
+display: flex; 
+align-items: center; 
+justify-content: space-between; 
+padding: 20px 20px 10px 20px; 
+border-bottom: 2px solid rgba(0, 20, 151, 0.59); 
+} 
+
+.recent-Articles { 
+font-size: 26px; 
+font-weight: 600; 
+color: #0f1c66; 
+} 
+
+.view { 
+height: 35px; 
+width: 90px; 
+border-radius: 8px; 
+background-color: #5500cb; 
+color: white; 
+font-size: 15px; 
+border: none; 
+cursor: pointer; 
+} 
+
+.report-body { 
+max-width: 1160px; 
+overflow-x: auto; 
+padding: 20px; 
+} 
+.report-topic-heading, 
+.item1 { 
+width: 1120px; 
+display: flex; 
+justify-content: space-between; 
+align-items: center; 
+} 
+.t-op { 
+font-size: 18px; 
+letter-spacing: 0px; 
+} 
+
+.items { 
+width: 1120px; 
+margin-top: 15px; 
+} 
+
+.item1 { 
+margin-top: 20px; 
+} 
+.t-op-nextlvl { 
+font-size: 14px; 
+letter-spacing: 0px; 
+font-weight: 600; 
+} 
+
+.label-tag { 
+width: 100px; 
+text-align: match-parent; 
+background-color: rgb(0, 177, 0); 
+color: white; 
+border-radius: 4px; 
+}
+
+.table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+  }
+  
+  .td, th {
+	border: 1px solid #dddddd;
+	text-align: match-parent;
+	padding: 8px;
+  }
+  
+  .tr:nth-child(even) {
+	background-color: #dddddd;
+  }
+
+  #searchInput {
+	float: right;
+	margin-right: 7px;
+	margin-bottom: 1px;
+}
+
+ #searchbtn{
+	float:right;
+
+ }
+  #searchContainer {
+	float: right;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+}
+
+.pagination button {
+    margin: 0 5px;
+}
+
+
+.search-filter-container {
+	float: right;
+    display: flex;
+    align-items: center;
+}
+
+.search-filter-container button,
+.search-filter-container input {
+
+	float: right;
+   margin-right: 10px; /* Adjust as needed */
+}
+
+  #seachtab{
+	margin-left: 10px;
+	float: right;
+	margin-bottom: 10px;
+}
+
+#filtertab {
+	float: right;
+	margin-bottom: 10px;
+}
+#seachtab form, #filtertab form {
+
+	display: flex;
+}
+#seachtab input {
+	margin-right: 10px;
+}
+
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+}
+
+.pagination button {
+    margin: 0 5px;
+}
+/* Add this CSS for the popup message */
+.no-data-message {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 18px;
+    color: red;
+    background-color: #fff; /* White background */
+    padding: 10px; /* Add some padding */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+
+
+.styled-button {
+  padding: 7px 9px;
+  margin: 7px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007BFF;
+  color: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none; /* Removes underline from the link */
+}
+
+.styled-button:hover {
+  background-color: #0056b3;
+}
+
+.styled-link {
+  color: #ffffff;
+  text-decoration: none; 
+ /* Ensures link text has no underline */
+}
+
+.styled-link:hover {
+  text-decoration: none; /* Adds underline on hover */
+}
+
+
+
+
+.loading-message {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 100px;
+ 
+}
+
+#seachtab form button,
+#filtertab button {
+    width: 100px; /* Adjust the width as needed */
+    height: 38px; /* Adjust the height as needed */
+    margin-bottom: 10px;
+}
+
+#seachtab,
+#filtertab {
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px;
+}
+
+#seachtab form input {
+    height: 38px; /* Adjust height to match the buttons */
+}
+
+
+.filter-message {
+  margin-top: 15px; /* Ensure no extra margin around the <p> tags */
+}
+
+
+
+
+.styled-button1 {
+  float: right;
+  padding: 7px 10px;
+  margin: 7px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ff2f00;
+  color: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none; /* Removes underline from the link */
+}
+
+.styled-button1:hover {
+  background-color: #b30000;
+}
+
+
+
+
+.styled-button2 {
+  float: right ;
+  padding: 7px 10px;
+  margin: 7px;
+  border: none;
+  border-radius: 4px;
+  background-color: #1900ff;
+  color: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none; /* Removes underline from the link */
+}
+
+.styled-button2:hover {
+  background-color: #0056b3;
+}
+
+#settingsButton {
+  float: right;
+  margin-right: 50px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#settingsButton:hover {
+  background-color: #5a6268;
+}
+
+
+
+body {
+ 
+  display:flex;
+  margin-right: 20px;
+  font-family: Arial, sans-serif;
+}
+
+
+
+.nav {
+  background-color: #f4f6f8;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-upper-options {
+  flex-grow: 1;
+  align-items: center;
+  position: relative;
+}
+
+.nav-option {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: #000000;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.nav-option:hover,
+.nav-option.active {
+  background-color: #f7f3f3;
+}
+
+.nav-option img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.content {
+ 
+  display: flex;
+  margin-top: 60px;
+  flex: 1; /* Take the remaining width */
+  padding: 10px; /* Padding to align content next to the navbar */
+  background-color: #ffffff; /* White background for the content area */
+
+}
+
+.content-section {
+  display: none;
+
+}
+
+.content-section.active {
+  display: flex;
+ 
+}
+
+
+
+.user-info {
+  color: var(--secondary-color);
+  font-size: 14px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icn {
+  height: 50px;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  height: 40px;
+  width: 40px;
+}
+
+/* Main Styles */
+.settings-container {
+  padding-left: 0;
+  margin-left: 0;
+
+display: flex; 
+justify-content: space-evenly; 
+align-items: center; 
+flex-wrap: wrap;
+
+gap: 65px; /* Remove gaps between the cards */
+    padding: 10px; /* Remove padding if any */
+    margin: 0; /* Remove margin if any */
+    
+}
+
+.card-deck {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 140px;
+  margin-left: 0;
+  margin-right: 40px;
+}
+
+.card {
+  flex: 1;
+  margin-top: 5px;
+  min-width: 250px; /* Adjust as needed */
+}
+
+.card-title {
+  font-size: 1.25rem; /* Adjust as needed */
+  margin-bottom: 0;
+}
+
+.card-text {
+  font-size: 1rem; /* Adjust as needed */
+  margin-bottom: 0;
+}
+
+.bg-info {
+  background-color: #17a2b8 !important; /* Info color */
+}
+
+.bg-success {
+  background-color: #28a745 !important; /* Success color */
+}
+
+.text-white {
+  color: #fff !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+
+
+
+.setts {
+  font-size: 30px; /* Adjust font size as needed */
+  margin-top: 0px;
+  border-radius: 10px;
+  margin-bottom: 20px; /* Space between heading and floating box */
+  text-align: left; /* Center the text */
+  background-color: var(--background-color2); /* Match the floating box background */
+  padding: 5px; /* Adjust padding as needed */
+}
+
+
+.pdf-button {
+  width: 100%; /* Make the PDF button full width */
+  max-width: 300px; /* Set maximum width to match other elements */
+  padding: 10px; /* Adjust padding for better touch targets */
+  text-align: center; /* Center align text within the button */
+  margin: 5px auto; /* Center the button and add vertical margin */
+  display: inline-block; /* Ensure the button behaves like a block element */
+  background-color: #007BFF; /* Primary color for the button */
+  color: #fff; /* White text color */
+  border: none; /* Remove borders */
+  border-radius: 5px; /* Rounded corners */
+  text-decoration: none; /* Remove underline from the link */
+  font-size: 14px; /* Adjust font size */
+  transition: background-color 0.3s; /* Smooth transition on hover */
+}
+
+.pdf-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.floating-block {
+  background-color: var(--background-color2);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.styled-button {
+  padding: 7px 10px;
+  margin: 7px;
+  border: none;
+  border-radius: 4px;
+  background-color: #0570fc;
+  color: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none; /* Removes underline from the link */
+}
+
+.styled-button:hover {
+  background-color: #0056b3;
+}
+
+.submenu {
+  display: none; /* Hide submenu by default */
+  position: absolute;
+  top: 25%; /* Position submenu below the settings option */
+  left: 20%;
+  background-color: #ffffff; /* Match with navbar background */
+  border: 1px solid #ddd; /* Optional border for slight separation */
+  
+  z-index: 1;
+  transition: max-height 0.3s ease, opacity 0.3s ease; /* Smooth transition */
+  max-height: 0; /* Initially collapsed */
+  overflow: hidden; /* Hide overflow when collapsed */
+}
+
+.submenu.show {
+  display: block; /* Show submenu when active */
+  max-height: 200px; /* Adjust based on submenu content height */
+  opacity: 1; /* Make submenu fully visible */
+}
+
+.submenu-option {
+  padding: 10px 15px;
+  cursor: pointer;
+  color: #333;
+}
+
+.submenu-option:hover {
+  background-color: #f1f1f1;
+}
+
+.content-container {
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  margin-top: 20px;
+}
+
+
+
+.table-container {
+  overflow-x: auto;
+  padding: 15px;
+}
+table {
+  width: 100%;
+  min-width: 600px;
+}
+th, td {
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+}
+/* Custom toggle switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #28a745;
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+.slider.round {
+  border-radius: 24px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}
+#chartTitle {
+
+  padding: 8px;
+  width: 300px;
+  font-size: 30px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* Default styles for the sidebar on larger screens */
+.settings-button {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Submenu hidden by default */
+.submenu {
+  display: none;
+}
+
+/* Floating button and submenu for smaller screens */
+@media screen and (max-width: 768px) {
+  .settings-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #e7e0e0;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+  }
+
+  .settings-button img {
+    margin-left: 9px;
+      width: 40px;
+      height: 30px;
+  }
+
+  .settings-text {
+      display: none; /* Hide text when in floating button mode */
+  }
+
+  /* Position submenu above the floating button */
+  .submenu {
+     
+      position: fixed;
+      top: 450px;  /* Positioning submenu just above the floating button */
+      right: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      display: none; /* Hidden by default */
+      z-index: 1001; /* Make sure it is above the button */
+  }
+
+  .submenu-option {
+      padding: 10px;
+      cursor: pointer;
+  }
+
+  /* Show submenu when button is clicked */
+  .submenu.show {
+      display: block;
+  }
+}
+
+/* Enable horizontal scrolling on smaller screens */
+@media screen and (max-width: 768px) {
+  body {
+    overflow-x: auto; /* Allow horizontal scrolling */
+  }
+
+  .main, .main1, .main2 {
+    overflow-x: auto; /* Allow horizontal scrolling inside main sections */
+    transition: width 0.2s ease; /* Smooth width adjustment */
+  }
+
+  .navcontainer, .box-container, .report-body {
+    overflow-x: auto; /* Enable horizontal scroll for these elements */
+    transition: width 0.2s ease; /* Smooth width adjustment */
+  }
+
+  .nav {
+    width: 100%; /* Set sidebar width to 100% */
+    position: relative; /* Change position to avoid overlapping */
+    transition: width 0.2s ease; /* Smooth width adjustment */
+  }
+
+  .navcontainer {
+    width: 100%; /* Set nav container width to 100% */
+    transition: width 0.2s ease; /* Smooth width adjustment */
+  }
+
+  .main, .main1, .main2 {
+    padding: 20px; /* Adjust padding */
+    width: 100%; /* Ensure main sections take full width */
+    margin: 0; /* Remove margin to prevent overflow */
+    overflow-y: auto; /* Allow vertical scrolling if content overflows */
+    transition: width 0.2s ease; /* Smooth width adjustment */
+  }
+
+  .box-container, .box-container1, .box-container2 {
+    display: grid; /* Use grid layout for better control */
+    grid-template-columns: repeat(2, 1fr); /* Two columns for cards */
+    gap: 5px; /* Reduced gap between items */
+    justify-items: center; /* Center align items */
+  }
+
+  .box {
+    width: 100%; /* Full width for cards in the grid */
+    max-width: 300px; /* Set a maximum width for boxes */
+    margin-bottom: 10px; /* Add spacing between boxes */
+    flex: 0 1 auto; /* Prevent shrinking of cards */
+    transition: width 0.2s ease; /* Smooth width adjustment */
+  }
+
+  .table-container {
+    width: 100%; /* Ensure table container fills the available width */
+    max-width: 300px; /* Match maximum width to that of the cards */
+    margin: 0 auto; /* Center align the table container */
+  }
+
+  table {
+    width: 100%; /* Ensure table width is 100% of the container */
+    border-collapse: collapse; /* Ensure table borders collapse for alignment */
+  }
+
+  th, td {
+    padding: 5px; /* Add padding for table cells */
+    text-align: center; /* Center align text */
+    font-size: 12px; /* Reduce font size for better fit */
+  }
+
+  /* Ensure chart width is responsive */
+  .chart-container {
+    width: 50%; /* Make the chart container full width */
+    height: 300px; /* Set a specific height for the chart */
+    margin: 0 auto; /* Center align the chart container */
+    transition: width 0.2s ease, height 0.2s ease; /* Smooth width and height adjustment */
+    padding: 10px; /* Add padding for better spacing */
+  }
+
+  /* QR Code adjustments */
+  .qr-code {
+    width: 50px; /* Adjust QR code size */
+    height: 50px; /* Maintain aspect ratio */
+    margin: 0 auto; /* Center align QR code */
+  }
+
+  /* Responsive styles for submenu options */
+  .submenu-option {
+    width: 100%; /* Make submenu options full width */
+  }
+
+  .pdf-button {
+    width: 100%; /* Make the PDF button full width */
+    max-width: 300px; /* Set maximum width to match other elements */
+    padding: 10px; /* Adjust padding for better touch targets */
+    text-align: center; /* Center align text within the button */
+    margin: 5px auto; /* Center the button and add vertical margin */
+    display: inline-block; /* Ensure the button behaves like a block element */
+    background-color: #007BFF; /* Primary color for the button */
+    color: #fff; /* White text color */
+    border: none; /* Remove borders */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Remove underline from the link */
+    font-size: 10px; /* Adjust font size */
+    transition: background-color 0.3s; /* Smooth transition on hover */
+  }
+
+  .pdf-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+
+  .box-container2 {
+    grid-template-columns: 1fr; /* Stack items on smaller screens */
+  }
+
+  .dynamic-url {
+    word-wrap: break-word; /* Ensure long URLs wrap onto the next line */
+    font-size: 19px; /* Reduce font size for better fit */
+    text-align: center; /* Center align the URL text */
+  }
+}
+
+/* Larger screen adjustments */
+@media screen and (min-width: 768px) {
+  .main, .main1, .main2 {
+    max-width: 1290px; /* Set a maximum width for larger screens */
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .box-container, .box-container1, .box-container2 {
+    grid-template-columns: repeat(3, 1fr); /* Increase to 3 columns for larger screens */
+  }
+
+  .box {
+    max-width: 400px; /* Adjust card width */
+  }
+
+  .table-container, .chart-container {
+    max-width: 100%; /* Ensure the table and chart fill the width on larger screens */
+  }
+  .chart-container {
+    width: 100%; /* Make the chart container full width */
+    height: auto; /* Allow height to adjust automatically */
+    margin: 0 auto; /* Center align the chart container */
+    transition: width 0.2s ease; /* Smooth width adjustment */
+    padding: 10px; /* Add padding for better spacing */
+  }
+}

@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Dashboard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+  <link rel="stylesheet" href="/static/css/responsive.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+   
+
+
+
+
+</head>
+<body>
+  <!-- for header part -->
+  <header>
+    <div class="logosec" style="float: left ;">
+      <div class="logo">Fuel Management System</div>
+    </div>
+    <div class="searchbar">
+      <img src="/static/imgs/logo.png" class="icn" alt="logo">
+    </div>
+    <div class="message">
+      Welcome! <b>Name: </b> {{ user.name if user.name else user.accountname }} 
+               <b>Email: </b> {{ user.email if user.email else user.accountemail }}
+  </div>
+  </header>
+
+  <div class="main-container"> 
+    <div class="navcontainer">
+      <nav class="nav">
+        <div class="nav-upper-options">
+          <div class="nav-option option1" onclick="openContent('dashboard')">
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png" class="nav-img" alt="dashboard">
+            <h4>Dashboard</h4>
+          </div>
+         
+          <div class="nav-option option6 settings-button" onclick="toggleSubmenu('settingsSubmenu')">
+            {% if user.is_super_admin %}
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/4.png" class="nav-img" alt="settings">
+                <h4 class="settings-text">Settings</h4>
+            {% elif user.is_admin %}
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/4.png" class="nav-img" alt="settings">
+                <h4 class="settings-text">Settings</h4>
+            {% endif %}
+        </div>
+        
+        <div id="settingsSubmenu" class="submenu">
+            {% if user.is_super_admin %}
+                <div class="submenu-option" onclick="openContent('settings')">Add a Company</div>
+                <div class="submenu-option" onclick="openContent('setappurl')">Application Settings</div>
+            {% elif user.is_admin %}
+                <div class="submenu-option" onclick="openContent('addUserAccounts')">Add a User</div>
+                <div class="submenu-option" onclick="openContent('setappurl')">Application Settings</div>
+            {% endif %}
+
+            <div class="submenu-option" onclick="window.location.href='/dashboard'">Back</div>
+        
+            <div class="submenu-option" onclick="window.location.href='/login'">Logout</div>
+
+        </div>
+          
+         
+          
+          <div class="nav-option logout">
+            <a href="/logout" class="button2">Logout</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    
+    
+    <div id="content" class="content-container">
+      <!-- Content will be dynamically loaded here -->
+    </div>
+  </div>
+  
+  <script>
+function toggleSubmenu(submenuId) {
+  var submenu = document.getElementById(submenuId);
+  
+  if (submenu.classList.contains('show')) {
+    submenu.classList.remove('show');
+  } else {
+    // Hide all other submenus
+    var allSubmenus = document.querySelectorAll('.submenu');
+    allSubmenus.forEach(function(menu) {
+      menu.classList.remove('show');
+    });
+    
+    submenu.classList.add('show');
+  }
+}
+
+
+
+  
+  function openContent(page) {
+    // Implement your page loading logic here
+    console.log('Opening page:', page);
+    var content = document.getElementById('content');
+    
+    // For demonstration purposes, replace the content based on the page parameter
+    if (page === 'addCompany') {
+      content.innerHTML = '<h2>Add a Company</h2><p>Form and details for adding a company...</p>';
+    } else if (page === 'applicationSettings') {
+      content.innerHTML = '<h2>Application Settings</h2><p>URL used to send data to the database: <strong>https://example.com/data</strong></p>';
+    } else {
+      content.innerHTML = '<h2>' + page.charAt(0).toUpperCase() + page.slice(1) + '</h2><p>Content for ' + page + ' page...</p>';
+    }
+  }
+  </script>
+  
+ 
+  
+      
+          
+      <div class="content">
+          <div id="dashboard" class="content-section active">
+              
+            <div class="main"> 
+       <!-- Dashboard content goes here -->
+        <h2>Dashboard</h2>       
+
+    <!-- <div class="searchbar2">
+      <input type="text" placeholder="Search">
+      <div class="searchbtn">
+        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png" class="icn srchicn" alt="search-button">
+      </div>
+    </div>-->
+    <div class="box-container">
+      <div class="box box1">
+        <div class="text">
+          <h2 class="topic-heading" id="devices_logged">{{ devices_logged }}</h2>
+          <h2 class="topic">Device Entries Logged</h2>
+        </div>
+        <img src="/static/imgs/sensor.png" alt="Views">
+      </div>
+      <div class="box box2">
+        <div class="text">
+          <h2 class="topic-heading" id="active_devices">{{ active_devices }}</h2>
+          <h2 class="topic">Active Devices</h2>
+        </div>
+        <img src="/static/imgs/car.png" alt="likes">
+      </div>
+      <div class="box box3">
+        <div class="text">
+          <h2 class="topic-heading">320</h2>
+          <h2 class="topic">Comments</h2>
+        </div>
+        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(32).png" alt="comments">
+      </div>
+      <div class="box box4">
+        <div class="text">
+          <h2 class="topic-heading">70</h2>
+          <h2 class="topic">Published</h2>
+        </div>
+        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185029/13.png" alt="published">
+      </div>
+    </div>
+    <script>
+      function updateDeviceEntriesCount(adminname) {
+        $.get(`/api/${adminname}/device_entries_logged`, function(data) {
+            if (data.device_entries_logged !== undefined) {
+                $("#devices_logged").text(data.device_entries_logged);
+            } else {
+                console.error("Error fetching device entries logged.");
+            }
+        }).fail(function(error) {
+            console.error("Failed to fetch device entries logged:", error);
+        });
+    }
+    
+    function updateActiveDevicesCount(adminname) {
+        $.get(`/api/${adminname}/no_of_devices_active`, function(data) {
+            if (data.no_of_devices_active !== undefined) {
+                $("#active_devices").text(data.no_of_devices_active);
+            } else {
+                console.error("Error fetching active devices.");
+            }
+        }).fail(function(error) {
+            console.error("Failed to fetch active devices:", error);
+        });
+    }
+    
+    function startAutoRefresh(adminname) {
+        // Instantly update the counts on page load
+        updateDeviceEntriesCount(adminname);
+        updateActiveDevicesCount(adminname);
+    
+        // Continue to update the counts every 5 seconds
+        setInterval(function() {
+            updateDeviceEntriesCount(adminname);
+            updateActiveDevicesCount(adminname);
+        }, 5000); // Refresh every 5 seconds
+    }
+    
+    // Fetch current admin name and start auto-refresh
+    $(document).ready(function() {
+        $.get("/api/get_current_admin", function(data) {
+            if (data.admin_name) {
+                startAutoRefresh(data.admin_name);
+            } else {
+                console.error("No admin logged in");
+            }
+        }).fail(function(error) {
+            console.error("Failed to get current admin:", error);
+        });
+    });
+    
+  </script>
+  
+  
+ 
+
+ 
+
+    <div class="report-container">
+      <div class="report-header">
+        <h1 class="recent-Articles">Recent Activity</h1>
+      </div>
+      <br>
+  
+
+
+      
+      <div id="google-chart-container">
+
+
+
+        <h2 id="chartTitle" contenteditable="true">Fuel Consumption Line Chart</h2>
+
+
+        <script>
+            let adminIdentifier = ""; // Variable to store the logged-in admin's name
+          
+            // Function to fetch the current admin name from the server
+            async function fetchCurrentAdmin() {
+              try {
+                const response = await fetch('/api/get_current_admin');
+                if (response.ok) {
+                  const data = await response.json();
+                  adminIdentifier = data.admin_name; // Store the admin name
+                  loadSavedTitle(); // Load the saved title after fetching admin name
+                } else {
+                  console.error('Failed to fetch admin name:', response.status);
+                }
+              } catch (error) {
+                console.error('Error fetching admin name:', error);
+              }
+            }
+          
+            // Load the saved title from local storage when the page loads
+            function loadSavedTitle() {
+              let savedTitle = localStorage.getItem(`chartTitle_${adminIdentifier}`);
+              if (savedTitle) {
+                document.getElementById("chartTitle").innerText = savedTitle;
+              }
+            }
+          
+            // Save the title to local storage
+            function saveTitle() {
+              let newTitle = document.getElementById("chartTitle").innerText;
+              localStorage.setItem(`chartTitle_${adminIdentifier}`, newTitle);
+              alert("Title saved!");
+            }
+          
+            // Fetch the current admin on page load
+            window.onload = fetchCurrentAdmin;
+          </script>
+
+<br>
+<input type="date" id="startDatePicker" title="Select Start Date">
+<input type="date" id="endDatePicker" title="Select End Date">
+<button id="filterByDateRangeBtn" class="styled-button">Filter by Date Range</button>
+<input type="time" id="startTimePicker" title="Select Start Time" step="1" disabled>
+<input type="time" id="endTimePicker" title="Select End Time" step="1" disabled>
+<button id="filterByTimeRangeBtn" class="styled-button" disabled>Filter by Time Range</button>
+<button class="styled-button">
+    <a href="{{ url_for('admin_dashboard', adminname=user.name, filter='latest') }}" class="styled-link">Go to Latest</a>
+</button>
+<div style="display: flex; margin-top: 10px;">
+  <button id="sortByHourBtn" class="styled-button" style="display: none; margin-right: 10px;">Sort by Hour</button>
+  <button id="sortByMinuteBtn" class="styled-button" style="display: none;">Sort by Minute</button>
+</div>
+<div id="currentDateTime" style="font-weight: bold; margin-top: 10px;"></div>
+
+</div>
+
+<!--Hard coded chart -->
+<div id="plotly-chart" style="width: 100%; height: 400px;"></div>
+<div id="noDataMessage" class="no-data-message" style="display: none;">No data available for the selected range.</div>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    let jsonDataParsed = null; // Global variable for parsed data
+    let selectedDate = ''; // Track the selected date for sorting
+
+    // Function to fetch data from Flask API
+    async function fetchChartData() {
+      try {
+          // Fetch admin details from session
+          const response = await fetch('/api/get_current_admin');
+          let data = await response.json();
+  
+          let dataResponse;
+  
+          if (response.ok && data.admin_name) {
+              const admin_name = data.admin_name;
+              console.log(`Admin logged in: ${admin_name}`);
+              dataResponse = await fetch(`/api/admin/${admin_name}/sensor_data`);
+          } else {
+              // If no admin is logged in, check for user session
+              const userResponse = await fetch('/api/get_current_user');
+              const userData = await userResponse.json();
+              
+              if (userResponse.ok && userData.user_name) {
+                  const user_name = userData.user_name;
+                  console.log(`User logged in: ${user_name}`);
+                  dataResponse = await fetch(`/api/user/${user_name}/sensor_data`);
+              } else {
+                  // No user or admin is logged in
+                  console.log("No user or admin logged in.");
+                  document.getElementById('noDataMessage').style.display = 'block';
+                  return null;
+              }
+          }
+  
+          // Parse the sensor data response
+          const sensorData = await dataResponse.json();
+          console.log(`Fetched sensor data:`, sensorData);  // Check the structure of the response here
+  
+          // Handle cases where the API returns an error message
+          if (sensorData.message) {
+              console.error(`Error fetching data: ${sensorData.message}`);
+              document.getElementById('noDataMessage').style.display = 'block';
+              return null;
+          }
+  
+          // Ensure sensorData is an array before mapping
+          if (!Array.isArray(sensorData)) {
+              console.error("Sensor data is not in array format:", sensorData);
+              document.getElementById('noDataMessage').style.display = 'block';
+              return null;
+          }
+  
+          // Extract dates and volume_liters from the API response
+          const dates = sensorData.map(item => item.date);
+          const volumeLiters = sensorData.map(item => item.volume_liters);
+  
+          // Parse the data into a usable format for filtering and sorting
+          jsonDataParsed = { labels: dates, volumeLiters: volumeLiters };
+  
+          // Draw the chart with fetched data
+          drawChart(jsonDataParsed.labels, jsonDataParsed.volumeLiters);
+  
+          return jsonDataParsed;
+      } catch (error) {
+          console.error("Error fetching chart data:", error);
+          document.getElementById('noDataMessage').style.display = 'block';
+      }
+  }
+  
+  
+
+    // Function to draw the chart
+    function drawChart(dates, volumeLiters) {
+        const chartData = {
+            x: dates,
+            y: volumeLiters,
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Liters'
+        };
+
+        const layout = {
+            title: 'Fuel Consumption',
+            xaxis: { title: 'Date' },
+            yaxis: { title: 'Liters' }
+        };
+
+        Plotly.newPlot('plotly-chart', [chartData], layout);
+    }
+  
+  
+
+    // Function to filter data by date range
+    function filterByDateRange(startDate, endDate) {
+        if (!jsonDataParsed) return;
+
+        const filteredData = {
+            labels: [],
+            volumeLiters: []
+        };
+
+        for (let i = 0; i < jsonDataParsed.labels.length; i++) {
+            // Convert date format to 'YYYY-MM-DD' for comparison
+            const currentDate = new Date(jsonDataParsed.labels[i]).toISOString().split('T')[0];
+            if (currentDate >= startDate && currentDate <= endDate) {
+                filteredData.labels.push(jsonDataParsed.labels[i]);
+                filteredData.volumeLiters.push(jsonDataParsed.volumeLiters[i]);
+            }
+        }
+
+        if (filteredData.labels.length === 0) {
+            document.getElementById('noDataMessage').style.display = 'block';
+        } else {
+            document.getElementById('noDataMessage').style.display = 'none';
+            drawChart(filteredData.labels, filteredData.volumeLiters);
+
+            // Update the selected date for sorting
+            selectedDate = startDate; // Set selected date to the start date after filtering
+        }
+    }
+
+    // Filter by time range function remains the same as in the original code
+    function filterByTimeRange(startDate, startTime, endDate, endTime) {
+        if (!jsonDataParsed) return;
+
+        const filteredData = {
+            labels: [],
+            volumeLiters: []
+        };
+
+        const startDateTimeStr = `${startDate} ${startTime}`;
+        const endDateTimeStr = `${endDate} ${endTime}`;
+
+        for (let i = 0; i < jsonDataParsed.labels.length; i++) {
+            const dateTimeStr = jsonDataParsed.labels[i];
+            if (dateTimeStr >= startDateTimeStr && dateTimeStr <= endDateTimeStr) {
+                filteredData.labels.push(jsonDataParsed.labels[i]);
+                filteredData.volumeLiters.push(jsonDataParsed.volumeLiters[i]);
+            }
+        }
+
+        if (filteredData.labels.length === 0) {
+            document.getElementById('noDataMessage').style.display = 'block';
+        } else {
+            document.getElementById('noDataMessage').style.display = 'none';
+            drawChart(filteredData.labels, filteredData.volumeLiters);
+        }
+    }
+
+    // Fetch data and draw the chart when the page loads
+    document.addEventListener("DOMContentLoaded", async function() {
+        const chartData = await fetchChartData();
+        if (chartData) {
+            drawChart(chartData.labels, chartData.volumeLiters);
+        }
+
+        // Event listeners for filtering and sorting
+        document.getElementById('filterByDateRangeBtn').addEventListener('click', function() {
+            const startDate = document.getElementById('startDatePicker').value;
+            const endDate = document.getElementById('endDatePicker').value;
+            if (startDate && endDate) {
+                filterByDateRange(startDate, endDate);
+                // Show sort buttons if the same date is selected
+                if (startDate === endDate) {
+                    document.getElementById('sortByHourBtn').style.display = 'block';
+                    document.getElementById('sortByMinuteBtn').style.display = 'block';
+                } else {
+                    document.getElementById('sortByHourBtn').style.display = 'none';
+                    document.getElementById('sortByMinuteBtn').style.display = 'none';
+                }
+            } else {
+                alert("Please select a valid date range.");
+            }
+        });
+
+        document.getElementById('filterByTimeRangeBtn').addEventListener('click', function() {
+            const startDate = document.getElementById('startDatePicker').value;
+            const startTime = document.getElementById('startTimePicker').value;
+            const endDate = document.getElementById('endDatePicker').value;
+            const endTime = document.getElementById('endTimePicker').value;
+            if (startTime && endTime) {
+                filterByTimeRange(startDate, startTime, endDate, endTime);
+            } else {
+                alert("Please select a valid time range.");
+            }
+        });
+
+        // Add event listeners for sort buttons
+        document.getElementById('sortByHourBtn').addEventListener('click', function() {
+            sortByHour(); // Call the sorting function for hour
+        });
+
+        document.getElementById('sortByMinuteBtn').addEventListener('click', function() {
+            sortByMinute(); // Call the sorting function for minute
+        });
+
+        // Function to sort data by hour
+        function sortByHour() {
+            if (!jsonDataParsed) return;
+
+            const sortedData = {
+                labels: [],
+                volumeLiters: []
+            };
+
+            const groupedData = {};
+
+            jsonDataParsed.labels.forEach((label, index) => {
+                const date = new Date(label);
+                const hour = date.getHours();
+                const dateString = date.toISOString().split('T')[0]; // Get date only
+
+                // Check if the date matches the selected date
+                if (dateString === selectedDate) {
+                    if (!groupedData[dateString]) {
+                        groupedData[dateString] = {};
+                    }
+
+                    if (!groupedData[dateString][hour]) {
+                        groupedData[dateString][hour] = {
+                            totalVolume: 0,
+                            count: 0
+                        };
+                    }
+
+                    groupedData[dateString][hour].totalVolume += jsonDataParsed.volumeLiters[index];
+                    groupedData[dateString][hour].count++;
+                }
+            });
+
+            for (const date in groupedData) {
+                for (const hour in groupedData[date]) {
+                    sortedData.labels.push(`${date} ${hour}:00`);
+                    sortedData.volumeLiters.push(groupedData[date][hour].totalVolume);
+                }
+            }
+
+            drawChart(sortedData.labels, sortedData.volumeLiters);
+        }
+
+        // Function to sort data by minute
+        function sortByMinute() {
+            if (!jsonDataParsed) return;
+
+            const sortedData = {
+                labels: [],
+                volumeLiters: []
+            };
+
+            const groupedData = {};
+
+            jsonDataParsed.labels.forEach((label, index) => {
+                const date = new Date(label);
+                const hour = date.getHours();
+                const minute = date.getMinutes();
+                const dateString = date.toISOString().split('T')[0]; // Get date only
+                const timeString = `${hour}:${minute < 10 ? '0' : ''}${minute}`; // Format minute
+
+                // Check if the date matches the selected date
+                if (dateString === selectedDate) {
+                    if (!groupedData[dateString]) {
+                        groupedData[dateString] = {};
+                    }
+
+                    if (!groupedData[dateString][timeString]) {
+                        groupedData[dateString][timeString] = {
+                            totalVolume: 0,
+                            count: 0
+                        };
+                    }
+
+                    groupedData[dateString][timeString].totalVolume += jsonDataParsed.volumeLiters[index];
+                    groupedData[dateString][timeString].count++;
+                }
+            });
+
+            for (const date in groupedData) {
+                for (const time in groupedData[date]) {
+                    sortedData.labels.push(`${date} ${time}`);
+                    sortedData.volumeLiters.push(groupedData[date][time].totalVolume);
+                }
+            }
+
+            drawChart(sortedData.labels, sortedData.volumeLiters);
+        }
+    });
+
+    // Enable time inputs based on date selection
+    document.getElementById('startDatePicker').addEventListener('change', function() {
+        const startDate = this.value;
+        if (startDate) {
+            document.getElementById('startTimePicker').disabled = false;
+            document.getElementById('endTimePicker').disabled = false;
+        }
+    });
+
+    document.getElementById('endDatePicker').addEventListener('change', function() {
+        const endDate = this.value;
+        if (endDate) {
+            document.getElementById('startTimePicker').disabled = false;
+            document.getElementById('endTimePicker').disabled = false;
+        }
+    });
+</script>
+       
+  <br>
+      <br>
+      <h2>Sensor Data Receiver</h2>
+      <div class="table-responsive">
+        <div id="seachtab">
+          <form method="get" action="{{ url_for('admin_dashboard', adminname=user.name) }}">
+            <input type="text" name="query" value="{{ search_query }}" placeholder="Search by ID or other fields...">
+            <button type="submit">Search</button>
+          </form>
+        </div>
+        <div id="filtertab" class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filter
+          </button>
+          <div class="dropdown-menu" aria-labelledby="filterDropdown">
+            <a class="dropdown-item" href="{{ url_for('admin_dashboard', adminname=user.name, filter='latest') }}">Latest Entries</a>
+            <a class="dropdown-item" href="{{ url_for('admin_dashboard', adminname=user.name, filter='oldest') }}">Oldest Entries</a>
+          </div>
+        </div>
+        {% if filter_option == 'latest' %}
+          <p class="filter-message">Displaying the latest entries</p>
+        {% elif filter_option == 'oldest' %}
+          <p class="filter-message">Displaying the oldest entries</p>
+        {% endif %}
+      
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Full Address</th>
+              <th>Sensor Data</th>
+              <th>Volume (Liters)</th>
+              <th>Vehicle No</th>
+              <th>QR Code</th>
+              <th>PDF</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for data_point in sense_data %}
+            <tr>
+              <td>{{ data_point.id }}</td>
+              <td>
+                <div class="date">{{ data_point.date.strftime('%Y-%m-%d') }}</div>
+                <div class="time">{{ data_point.date.strftime('%H:%M:%S') }}</div>
+            </td>
+              <td>{{ data_point.date }}</td>
+              <td>{{ data_point.full_addr }}</td>
+              <td>{{ data_point.sensor_data }}</td>
+              <td>{{ data_point.volume_liters }}</td>
+              <td>{{ data_point.vehicleno }}</td>
+              <td><img src="{{ url_for('generate_qr', id=data_point.id) }}" alt="QR Code"></td>
+              <td><a href="{{ url_for('generate_pdf', id=data_point.id) }}" class="btn btn-primary">Download PDF</a></td>
+            </tr>
+            {% endfor %}
+            <tr>
+              
+          </tr>
+          </tbody>
+        </table>
+      
+        <!-- Pagination -->
+        <div class="pagination-container">
+          <div class="pagination">
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                {% if pagination.has_prev %}
+                <li class="page-item">
+                  <a class="page-link" href="{{ url_for('admin_dashboard', adminname=user.name, page=pagination.prev_num, filter=filter_option, query=request.args.get('query', '')) }}">Previous</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                  <span class="page-link">Previous</span>
+                </li>
+                {% endif %}
+                {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                <li class="page-item {% if page_num == pagination.page %}active{% endif %}">
+                  <a class="page-link" href="{{ url_for('admin_dashboard', adminname=user.name, page=page_num, filter=filter_option, query=request.args.get('query', '')) }}">{{ page_num }}</a>
+                </li>
+                {% endfor %}
+                {% if pagination.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="{{ url_for('admin_dashboard', adminname=user.name, page=pagination.next_num, filter=filter_option, query=request.args.get('query', '')) }}">Next</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                  <span class="page-link">Next</span>
+                </li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+</div>
+
+<script>
+  const adminname = "{{ adminname }}";  // Use Flask template variable
+  fetch(`/api/admin/${adminname}/dashboard`)
+  .then(response => {
+    if (!response.ok) {
+      if (response.status === 401) {
+        console.error('Unauthorized access. Redirecting to login.');
+        // Redirect to login page or show an unauthorized message
+        window.location.href = '/login';
+      }
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    updateCards(data);
+    updateCharts(data);
+  })
+  .catch(error => console.error('Error fetching dashboard data:', error));
+
+  function updateCards(data) {
+    // Your code to update cards
+  }
+
+  function updateCharts(data) {
+    // Your code to update charts
+  }
+</script>     
+
+
+
+
+          <div id="vehicles" class="content-section">
+              <h1>Vehicles Content</h1><br>
+              <h4>hello </h4>
+              <!-- Vehicles content goes here -->
+          </div>
+          <div id="fuelReport" class="content-section">
+              <h1>Fuel Report Content</h1>
+              <!-- Fuel Report content goes here -->
+          </div>
+          <div id="institution" class="content-section">
+              <h1>Institution Content</h1>
+              <!-- Institution content goes here -->
+          </div>
+          <div id="profile" class="content-section">
+              <h1>profile Content</h1>
+              <!-- Profile content goes here -->
+  
+          </div>
+
+          <div id="setappurl" class="content-section">
+            <div class="main2"> 
+                <h2>Application Settings</h2>
+                <!-- Profile content goes here -->
+                <div class="box-container2"><br>
+                    <div class="box box1">
+                        <p class="text">The URL used to send data to the database is:</p>   
+                    </div>
+                    <h4>https://dashboard360.azurewebsites.net/api/admin/{{ user.name }}/sensor_data</h4>
+                </div>
+            </div>
+        </div>
+        
+
+        <div id="addUserAccounts" class="content-section">
+          <div class="settings-container">
+              <!-- Title -->
+              <div class="main1">
+                  <h1 class="setts">Manage User Accounts</h1>
+  
+                  <!-- Card Deck for Counts -->
+                  <div class="box-container1">
+                      <div class="box box1">
+                          <div class="text">
+                              <h2 class="topic-heading" id="totalAccounts">Loading...</h2>
+                              <h2 class="topic">Total Accounts</h2>
+                          </div>
+                          <img src="/static/imgs/sensor.png" alt="Accounts">
+                      </div>
+                      <div class="box box2">
+                          <div class="text">
+                              <h2 class="topic-heading" id="activeAccounts">Current Admin</h2>
+                              <h2 class="topic">{{user.email}}</h2>
+                          </div>
+                          <img src="/static/imgs/car.png" alt="Active Accounts">
+                      </div>
+                      <div class="box box3">
+                          <div class="text">
+                              <h2 class="topic-heading">320</h2>
+                              <h2 class="topic">Comments</h2>
+                          </div>
+                          <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(32).png" alt="comments">
+                      </div>
+                      <div class="box box4">
+                          <div class="text">
+                              <h2 class="topic-heading">70</h2>
+                              <h2 class="topic">Published</h2>
+                          </div>
+                          <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185029/13.png" alt="published">
+                      </div>
+                  </div>
+  
+                  <!-- Button to toggle form visibility -->
+                  <button class="btn btn-primary mb-3 float-right" type="button" data-toggle="collapse" data-target="#addUserAccountFormContainer" aria-expanded="false" aria-controls="addUserAccountFormContainer">
+                      +
+                  </button>
+  
+                  <!-- Collapsible form container -->
+                  <div class="collapse" id="addUserAccountFormContainer">
+                      <div class="container mt-4">
+                          <h2 class="text-center mb-4">Add User Account Details</h2>
+                          <form id="addUserAccountForm" action="/add_user_account" method="POST">
+                              <div class="form-group">
+                                  <label for="accountname">Account Name:</label>
+                                  <input type="text" class="form-control" id="accountname" placeholder="Enter account name" name="accountname">
+                              </div>
+                              
+                              <div class="form-group">
+                                  <label for="accountemail">Email:</label>
+                                  <input type="email" class="form-control" id="accountemail" placeholder="Enter email" name="accountemail">
+                              </div>
+  
+                              <div class="form-group">
+                                  <label for="accountpassword">Password:</label>
+                                  <input type="password" class="form-control" id="accountpassword" placeholder="Enter password" name="accountpassword">
+                              </div>
+  
+                              <div class="form-group">
+                                  <label for="accountrole">Role (0-User, 1-Admin):</label>
+                                  <input type="number" class="form-control" id="accountrole" placeholder="Enter Role" name="accountrole">
+                              </div>
+  
+                              <button type="submit" class="btn btn-dark">Submit</button>
+                              <a href="/login" class="btn btn-primary">Login</a>
+                          </form>
+                          
+                          <!-- Error message placeholder -->
+                          <p id="accountErrorMessage" class="text-danger mt-3" style="display: none;">Please provide credentials to register.</p>
+                      </div>
+                  </div> 
+                  <br>
+  
+                  <!-- Container for the table -->
+                  <div class="container table-container">
+                      <br>
+                      <h3 class="text-center mb-4">Current User Accounts</h3>
+                      <div class="table-responsive">
+                          <table id="userAccountTable" class="table table-striped table-bordered">
+                              <thead>
+                                  <tr>
+                                      <th>Name</th>
+                                      <th>Email</th>
+                                      <th>Role</th>
+                                      <th>Status</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <!-- Account data will be inserted here -->
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+  <!-- JavaScript functions for handling user accounts -->
+                  <script>
+                      function loadUserAccounts() {
+                          fetch('/api/user_accounts')
+                              .then(response => response.json())
+                              .then(data => {
+                                  const tableBody = document.querySelector('#userAccountTable tbody');
+                                  tableBody.innerHTML = ''; // Clear the table body
+                                  data.forEach(account => {
+                                      const row = document.createElement('tr');
+                                      row.innerHTML = `
+                                          <td>${account.accountname}</td>
+                                          <td>${account.accountemail}</td>
+                                          <td>
+                                              <select onchange="updateUserAccountRole(${account.id}, this.value === 'admin')">
+                                                  <option value="user" ${account.is_admin ? '' : 'selected'}>User</option>
+                                                  <option value="admin" ${account.is_admin ? 'selected' : ''}>Admin</option>
+                                              </select>
+                                          </td>
+                                          <td>
+                                              <label class="switch">
+                                                  <input type="checkbox" ${account.status ? 'checked' : ''} 
+                                                      onchange="updateUserAccountStatus(${account.id}, this.checked)">
+                                                  <span class="slider round"></span>
+                                              </label>
+                                          </td>
+                                      `;
+                                      tableBody.appendChild(row);
+                                  });
+                              })
+                              .catch(error => console.error('Error fetching user accounts:', error));
+                      }
+                      
+                      function updateUserAccountStatus(accountId, isActive) {
+                          fetch(`/api/user_accounts/${accountId}/status`, {
+                              method: 'POST',
+                              headers: {
+                                  'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({ status: isActive }),
+                          })
+                          .then(response => {
+                              if (!response.ok) {
+                                  return response.text().then(text => {
+                                      console.error('Error response from server:', text);
+                                      throw new Error('Network response was not ok');
+                                  });
+                              }
+                              return response.json();
+                          })
+                          .then(data => {
+                              updateCounts(); // Update counts after status change
+                          })
+                          .catch(error => console.error('Error updating account status:', error));
+                      }
+                      
+                      
+                    
+                    
+                
+                      function updateUserAccountRole(accountId, isAdmin) {
+                        return fetch(`/api/user_accounts/${accountId}/role`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ role: isAdmin ? 'admin' : 'user' }), // Send the correct role
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data); // Log the response for debugging
+                            // Remove the alert message
+                            // if (data.message) {
+                            //     alert(data.message); // Alert the user with a message from the server
+                            // }
+                            loadUserAccounts(); // Reload user accounts list
+                            updateCounts(); // Update counts after role change
+                        })
+                        .catch(error => console.error('Error updating account role:', error));
+                    }
+                    
+                    
+                    
+                    
+  
+                      function updateCounts() {
+                          fetch('/api/account_counts')
+                              .then(response => {
+                                  if (!response.ok) {
+                                      throw new Error('Network response was not ok');
+                                  }
+                                  return response.json();
+                              })
+                              .then(data => {
+                                  document.getElementById('totalAccounts').textContent = data.totalAccounts || 'N/A';
+                                  document.getElementById('activeAccounts').textContent = data.activeAccounts || 'N/A';
+                              })
+                              .catch(error => {
+                                  console.error('Error fetching counts:', error);
+                              });
+                      }
+                      // Function to fetch the total number of user accounts and update the UI
+                      function updateTotalAccounts() {
+                        fetch('/api/user_accounts')
+                          .then(response => response.json())
+                          .then(data => {
+                            // Calculate the total number of accounts
+                            const totalAccounts = data.length;
+
+                            // Update the UI with the total number of accounts
+                            document.getElementById('totalAccounts').textContent = totalAccounts;
+                          })
+                          .catch(error => {
+                            console.error('Error fetching user accounts:', error);
+                            document.getElementById('totalAccounts').textContent = 'Error';
+                          });
+                      }
+
+                      // Call the function to update the total accounts when the page loads
+                      document.addEventListener('DOMContentLoaded', updateTotalAccounts);
+                      
+                      document.getElementById('addUserAccountForm').addEventListener('submit', function(event) {
+                          event.preventDefault();
+                  
+                          var accountname = document.getElementById('accountname').value.trim();
+                          var email = document.getElementById('accountemail').value.trim();
+                          var password = document.getElementById('accountpassword').value.trim();
+                          var role = document.getElementById('accountrole').value.trim();
+                  
+                          if (accountname === '' || email === '' || password === '' || role === '') {
+                              document.getElementById('accountErrorMessage').style.display = 'block';
+                          } else {
+                              var formData = new FormData();
+                              formData.append('accountname', accountname);
+                              formData.append('accountemail', email);
+                              formData.append('accountpassword', password);
+                              formData.append('accountrole', role);
+                  
+                              fetch('/add_user_account', {
+                                  method: 'POST',
+                                  body: formData
+                              })
+                              .then(response => {
+                                  if (response.ok) {
+                                      loadUserAccounts();
+                                      updateTotalAccounts(); // Update the total accounts count
+                                      updateCounts(); // Ensure counts are updated after adding a user
+                                      $('#addUserAccountFormContainer').collapse('hide');
+                                      document.getElementById('addUserAccountForm').reset();
+                                  } else {
+                                      throw new Error('Failed to submit form');
+                                  }
+                              })
+                              .catch(error => console.error('Error:', error));
+                          }
+                      });
+                  
+                      document.addEventListener('DOMContentLoaded', function() {
+                          loadUserAccounts(); // Load user account data and set toggle states based on stored data
+                          updateCounts(); // Load and display initial counts
+                          updateTotalAccounts();
+                      });
+                  </script>
+              </div>
+          </div>
+      </div>
+      
+
+
+
+          <div id="settings" class="content-section">
+            <div class="settings-container">
+                <!-- Settings Title -->
+                <div class="main1"> 
+                <h1 class="setts">Settings</h1>
+                
+            
+        
+                <!-- Card Deck for Counts -->
+               
+                  <div class="box-container1">
+                    <div class="box box1">
+                      <div class="text">
+                        <h2 class="topic-heading" id="totalClients">Loading...</h2>
+                        <h2 class="topic">Total Users </h2>
+                      </div>
+                      <img src="/static/imgs/sensor.png" alt="Views">
+                    </div>
+                    <div class="box box2">
+                      <div class="text">
+                        <h2 class="topic-heading" id="totalCompanies">Loading...</h2>
+                        <h2 class="topic">Total Companies </h2>
+                      </div>
+                      <img src="/static/imgs/phone.png" alt="Views">
+                    </div>
+                      
+                    <div class="box box3">
+                      <div class="text">
+                        <h2 class="topic-heading">320</h2>
+                        <h2 class="topic">Comments</h2>
+                      </div>
+                      <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(32).png" alt="comments">
+                    </div>
+                    <div class="box box4">
+                      <div class="text">
+                        <h2 class="topic-heading">70</h2>
+                        <h2 class="topic">Published</h2>
+                      </div>
+                      <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210185029/13.png" alt="published">
+                    </div>
+                      
+                  </div>
+             
+              
+                
+                <!-- Container for the table -->
+                <div class="container table-container">
+                   <br>
+                        <!-- Button to toggle form visibility -->
+                <button class="btn btn-primary mb-3 float-right" type="button" data-toggle="collapse" data-target="#signupFormContainer" aria-expanded="false" aria-controls="signupFormContainer">
+                  +
+              </button>
+
+              <!-- Collapsible form container -->
+              <div class="collapse" id="signupFormContainer">
+                <div class="container mt-4">
+                    <h2 class="text-center mb-4">Add Company Details</h2>
+                    <form id="signupForm" action="/signup" method="POST">
+                        <div class="form-group">
+                            <label for="name"> Company Name:</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="is_admin">Is Admin (0-User, 1-Admin):</label>
+                            <input type="number" class="form-control" id="is_admin" placeholder="Enter Role" name="is_admin">
+                        </div>
+    
+                        <button type="submit" class="btn btn-dark">Submit</button>
+                        <a href="/login" class="btn btn-primary">Login</a>
+                    </form>
+                    
+                    <!-- Error message placeholder -->
+                    <p id="errorMessage" class="text-danger mt-3" style="display: none;">Please provide credentials to register.</p>
+                </div>
+            </div> 
+            <br>
+           
+         
+         
+            <div class="container table-container">
+              <br>
+              <h3 class="text-center mb-4">Current Companies</h3>
+              <div class="table-responsive">
+                <table id="usersTable" class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- User data will be inserted here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <script>
+              
+            
+          
+              function loadUsers() {
+                fetch('/api/users')
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableBody = document.querySelector('#usersTable tbody');
+                        tableBody.innerHTML = ''; // Clear the table body
+                        data.forEach(user => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${user.name}</td>
+                                <td>${user.email}</td>
+                                <td>
+                                    <select onchange="updateUserRole(${user.id}, this.value === 'admin')">
+                                        <option value="user" ${user.is_admin ? '' : 'selected'}>User</option>
+                                        <option value="admin" ${user.is_admin ? 'selected' : ''}>Admin</option>
+                                    </select>
+                                </td>
+                                
+                                <td>
+                                    <label class="switch">
+                                      <input type="checkbox" ${user.status ? 'checked' : ''} 
+                                        onchange="updateUserStatus(${user.id}, this.checked)">
+                                      <span class="slider round"></span>
+                                    </label>
+                                </td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching users:', error));
+            }
+            
+            function updateUserStatus(userId, isActive) {
+                console.log('Updating user status to:', isActive);
+            
+                fetch(`/api/users/${userId}/status`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ status: isActive }),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            console.error('Error response from server:', text);
+                            throw new Error('Network response was not ok');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('User status updated:', data);
+                    // Optionally, show a success message or update the UI
+                })
+                .catch(error => console.error('Error updating user status:', error));
+            }
+            
+            function updateUserRole(userId, isAdmin) {
+              console.log('Updating user role to:', isAdmin ? 'admin' : 'user');
+          
+              fetch(`/api/users/${userId}/role`, {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ is_admin: isAdmin }),
+              })
+              .then(response => {
+                  if (!response.ok) {
+                      return response.text().then(text => {
+                          console.error('Error response from server:', text);
+                          throw new Error('Network response was not ok');
+                      });
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  console.log('User role updated:', data);
+                  loadUsers(); // Optionally reload users list to reflect the changes
+              })
+              .catch(error => console.error('Error updating user role:', error));
+          }
+
+
+
+
+
+
+
+            // Load users on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                loadUsers();  // Load user data and set toggle states based on stored data
+            });
+            
+          </script>
+            
+            <script>
+              document.getElementById('signupForm').addEventListener('submit', function(event) {
+                  // Prevent the form from submitting by default
+                  event.preventDefault();
+                  
+                  // Check if any of the input fields are empty
+                  var name = document.getElementById('name').value.trim();
+                  var email = document.getElementById('email').value.trim();
+                  var password = document.getElementById('pwd').value.trim();
+                  var is_admin = document.getElementById('is_admin').value.trim();
+                  
+                  if (name === '' || email === '' || password === '' || is_admin === '') {
+                      // Show error message
+                      document.getElementById('errorMessage').style.display = 'block';
+                  } else {
+                      // Create FormData object
+                      var formData = new FormData();
+                      formData.append('name', name);
+                      formData.append('email', email);
+                      formData.append('password', password);
+                      formData.append('is_admin', is_admin);
+                      
+                      // Submit form data using fetch
+                      fetch('/signup', {
+                          method: 'POST',
+                          body: formData
+                      })
+                      .then(response => {
+                          if (response.ok) {
+                              // Reload users and counts
+                              loadUsers();
+                              updateCounts();
+                              // Hide form and clear fields
+                              $('#signupFormContainer').collapse('hide');
+                              document.getElementById('signupForm').reset();
+                          } else {
+                              throw new Error('Failed to submit form');
+                          }
+                      })
+                      .catch(error => console.error('Error:', error));
+                  }
+              });
+              
+              
+              // Fetch and update counts
+              function updateCounts() {
+                  fetch('/api/counts') // Endpoint to fetch counts data
+                      .then(response => response.json())
+                      .then(data => {
+                          document.getElementById('totalClients').textContent = data.totalClients || 'N/A';
+                          document.getElementById('totalCompanies').textContent = data.totalCompanies || 'N/A';
+                      })
+                      .catch(error => console.error('Error fetching counts:', error));
+              }
+          
+              // Load users and counts on page load
+              document.addEventListener('DOMContentLoaded', function() {
+                  loadUsers();
+                  updateCounts();
+              });
+          </script>
+          
+        </div>
+        </div>
+      </div>
+          </div>
+  <script>
+    function openContent(contentId) {
+      const contentSections = document.querySelectorAll('.content-section');
+      contentSections.forEach(section => section.classList.remove('active'));
+  
+      const navOptions = document.querySelectorAll('.nav-option');
+      navOptions.forEach(option => option.classList.remove('active'));
+  
+      const selectedContent = document.getElementById(contentId);
+      if (selectedContent) {
+          selectedContent.classList.add('active');
+      } else {
+          console.error(`No content section found with ID '${contentId}'`);
+      }
+  
+      const selectedOption = document.querySelector(`.nav-option.option1`);
+      if (selectedOption) {
+          selectedOption.classList.add('active');
+      } else {
+          console.error(`No nav option found with class '${contentId}'`);
+      }
+  }
+  
+  document.addEventListener('DOMContentLoaded', function() {
+      openContent('dashboard');
+  });
+  
+</script>
+
+    
+      
+
+
+
+
+
+</body>
+</html>

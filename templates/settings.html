@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Ensure this path is correct -->
+
+    <style>
+        :root { 
+	--background-color1: #f5f7fa;   /* Slightly darker off-white */
+	--background-color2: #ffffff;   /* White */
+	--background-color3: #e2e6ea;   /* Light grey */
+	--background-color4: #caf3ed;   /* Soft light blue */
+	--primary-color: #d1d7e0;       /* Light blue-grey */
+	--secondary-color: #071059;     /* Darker blue for better contrast */
+	--Border-color: #c4c4c4;        /* Mid-tone grey */
+	--one-use-color: #0f1c66;       /* Medium dark blue */
+	--two-use-color: #0f1c66;       /* Slightly different blue for variation */
+  } 
+
+body { 
+background-color: var(--background-color4); 
+max-width: 100%; 
+overflow-x: hidden; 
+} 
+        /* Header Styles */
+        header {
+            height: 70px;
+            width: 100vw;
+            padding: 0 30px;
+            background-color: var(--background-color1);
+            position: fixed;
+            z-index: 100;
+            box-shadow: 1px 1px 15px rgba(161, 182, 253, 0.825);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo {
+            font-size: 27px;
+            font-weight: 600;
+            color: rgb(6, 21, 10);
+        }
+        
+        .user-info {
+            color: var(--secondary-color);
+            font-size: 14px;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .icn {
+            height: 50px;
+        }
+        
+        .icon-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .icon {
+            height: 40px;
+            width: 40px;
+        }
+        
+        /* Main Styles */
+        .settings-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: calc(100vh - 70px); /* Adjust height to fit below the header */
+            width: 100%;
+            padding: 20px;
+        }
+        
+        .setts {
+            font-size: 30px; /* Adjust font size as needed */
+            margin-top: 160px;
+            border-radius: 10px;
+            margin-bottom: 20px; /* Space between heading and floating box */
+            text-align: center; /* Center the text */
+            background-color: var(--background-color2); /* Match the floating box background */
+            padding: 20px; /* Adjust padding as needed */
+        }
+        
+        .floating-block {
+            background-color: var(--background-color2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .styled-button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .styled-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <div class="logo">Fuel Management System</div>
+        </div>
+        <div class="header-right">
+            <img src="static/imgs/logo.png" class="icn" alt="logo">
+            <div class="icon-container">
+                <img src="static/imgs/icon.png" class="icon" alt="icon"> <!-- Replace with actual icon path -->
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="settings-container">
+            <h2 class="setts">Settings</h2>
+            <div class="floating-block">
+                <a href="/client-onboarding" class="styled-button">Client Onboarding</a>
+                <a href="/access-onboarding" class="styled-button">Access Onboarding</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
